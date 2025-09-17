@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style/adding-product.css">
 </head>
 <body>
-    <form class="addProduct" action="/addProduct" method="POST">
+    <form class="addProduct" action="/addProduct" enctype="multipart/form-data" method="POST" >
         <fieldset>
             <legend>Product info</legend>
             
@@ -17,13 +17,12 @@
             <label for="product description">Product Description:</label>
             <textarea class="productDescription"type="text" name="productDescription" required maxlength="200"></textarea><br><br>
             
-            <label for="product description">Price:</label>
+            <label for="product price">Price:</label>
             <input type="text" name="productPrice" required><br><br>
 
             <label for="product img"></label>
-            <input type="file" name="productImg" required>
+            <input type="file" name="productImg" required >
             <button type="submit">submit</button>
-
         </fieldset>
     </form>
 </body>

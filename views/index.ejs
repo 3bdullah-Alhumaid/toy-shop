@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toy-shop</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
     <link rel="stylesheet" href="/style/main.css" class="css">
 </head>
 <body>
@@ -16,21 +18,46 @@
 
         <a class="header-a" href="/add-product">add product</a>
         <a class="header-a" href="#">register/login</a>
-
     </section>
 
-    <section class="news" id="news">
-        
+    <section class="swapper" id="swapper">
+
+    <div class="slides">
+        <img src="images/" alt="" class="previo">
+        <img src="images/" alt="" class="previo">
+        <img src="images/" alt="" class="previo">
+    </div>
+
+    <div class="arrows">            
+       <button onclick="prevSlide()"><i class="fa fa-chevron-left left-arrow"></i></button>
+       <button onclick="nextSlide()"><i class="fa fa-chevron-right right-arrow"></i></button>
+    </div>
+    
     </section>
 
     <section class="product" id="product">
-        <div class="container">
-            <div class="productImg">
-                <%- name %>
-            </div>
-        </div>
+        
+<% products.forEach(product => { %>
+  <div class="product-container">
+    <div class="productImg">
+     <% if (product.imgUrl) { %>
+  <img src="<%= product.imgUrl %>" alt="<%= product.name %>" />
+<% } else { %>
+  <p>No image available</p>
+<% } %>
+    </div>
+    <div class="productName"><%= product.name %></div>
+    <div class="productDesc"><em><%= product.description %></em></div>
+    <div class="productPrice"><%= product.price %></div>
 
+    <div class="btns" id="btns">
+        <div class="addCard"><button class="add-cart">add to card</button></div>
+        <div class="addWishlist"><button class="add-wish">add to wishlist</button></div>
+    </div>
+  </div>
+<% }) %>
     </section>
 
+    <script src="/script/script.js"></script>
 </body>
 </html>

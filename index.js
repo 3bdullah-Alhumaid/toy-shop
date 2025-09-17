@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
-
+import multer from "multer";
 const app = express();
 const port = 3000;
 
@@ -16,38 +16,51 @@ db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+const storage = multer.diskStorage({
+     destination: function (req, file, cb) {
+          cb(null, 'public/uploads')
+    },
+   filename: function (req, file, cb) {
+         cb(null, file.fieldname + '-' + Date.now())
+   }
+});
+const upload = multer({ storage: storage });
 
-app.get("/", async(req, res) =>{
-    let products =[];
-    const result= await db.query("SELECT name, description, price, img FROM product");
-    result.rows.forEach((product) => {
-    products.push(product.name);    
-    });
-      return products;
-    const shortcut = result.rows[0];
-    console.log(result.rows[0]);
-    res.render("index.ejs",{
-        name: shortcut.name,
-        description: shortcut.description,
-        price: shortcut.price,
-        img: shortcut.img,
-    });
-})
+app.get("/", async (req, res) => {
+    const result = await db.query("SELECT id, name, description, price, img FROM product");
+    const products = result.rows.map(product => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imgUrl: product.img ? `/uploads/${product.img}` : null,
+    }));
+    res.render("index.ejs",{ products });
+    console.log("products: ",products);
+});
 
 app.get('/add-product', async(req, res) =>{
     res.render("add-product.ejs");
 })
 
 
-app.post("/addProduct", async(req,res)=>{
+app.post("/addProduct", upload.single('productImg'), async (req, res) => {
     const name = req.body.productName;
     const description = req.body.productDescription;
     const price = req.body.productPrice;
-    const img = req.body.productImg;
- 
-    const result = await db.query("INSERT INTO product (name,description,price,img) VALUES ($1,$2,$3,$4)",
-    [name, description, price, img]);
-})
+
+    const image = req.file;
+
+    const imageFilename = image ? image.filename : null;
+
+    await db.query(
+        "INSERT INTO product (name, description, price, img) VALUES ($1, $2, $3, $4)",
+        [name, description, price, imageFilename]
+    );
+
+    res.redirect("/");
+});
+
 
 
 app.listen(port, () =>{

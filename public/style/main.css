@@ -15,31 +15,121 @@ body{
     color: blanchedalmond;
 }
 
-#news{
-    display: flex;
-    justify-content: center;
+
+.swapper {
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    height: 24em;
-    background-color: pink;
-}
-.addProduct{
-    display: block;
+    height: 40rem;
 }
 
+.slides {
+    display: flex;                  /* put images in a row */
+    transition: transform 0.5s ease;
+}
+
+.previo {
+    width: 100%;                     /* each image takes full container width */
+    flex-shrink: 0;                   /* prevent shrinking */
+    object-fit: cover;
+}
+
+.arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+
+
+.arrows button {
+    pointer-events: auto; /* allow clicking */
+    border-radius: 20%;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
 .product{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     background-color: rgb(31, 148, 31);
     width: 100%;
     height: 24em;
 
 }
-.product > .container{
+.product-container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 28em;
-    height: 22em;
+    align-items: center;
+    width: 20em;
+    height: 20em;
     background-color: grey;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
+    border: 2px black solid;
+}
+.productImg {
+    position: relative;
+    width: 100%;
+    height: 100%;  /* ensure container height is defined */
+    background-color: white;
+    overflow: hidden;
+}
+
+.productImg > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* fit entire image inside container without cropping */
+    border-radius: 20px 20px 0 0;
+}
+.productDesc{
+    color: rgb(172, 165, 165);
+}
+
+.btns{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.addCard, .addWishlist{
+    width: 50%;
+}
+
+.add-cart, .add-wish{
+    width: 100%;
+    transition-duration: 0.4s;
+}
+.add-cart:hover, .add-wish:hover{
+    background-color: orange;
+    color: white;
+}
+.add-cart{
+    border-radius: 2px 0 0 15px;
+}
+.add-wish{
+    border-radius:  0 2px 15px 0;
+}
+.productName, .productDesc, .productPrice{
+    width: 100%;
+    text-align: center;
+}
+.productName, .productDesc{
+    border-bottom: 2px black solid;
+}
+
+.productName{
+    border-top: 2px black solid;
 }
