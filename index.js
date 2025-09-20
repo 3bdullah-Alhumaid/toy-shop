@@ -43,7 +43,7 @@ app.get('/add-product', async(req, res) =>{
     res.render("add-product.ejs");
 })
 
-
+// add new product section:
 app.post("/addProduct", upload.single('productImg'), async (req, res) => {
     const name = req.body.productName;
     const description = req.body.productDescription;
@@ -61,8 +61,17 @@ app.post("/addProduct", upload.single('productImg'), async (req, res) => {
     res.redirect("/");
 });
 
-
-
+app.get("/edit-product", async(req, res) =>{
+    const result = await db.query("SELECT * FROM product");
+    const products = result.rows.map(product => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imgUrl: product.img ? `/uploads/${product.img}` : null,
+    }));
+res.render("edit-product.ejs", {products});
+})
 app.listen(port, () =>{
     console.log(`app is running in port:${port}`)
 })

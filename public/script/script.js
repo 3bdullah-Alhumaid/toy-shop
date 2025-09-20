@@ -31,3 +31,23 @@ document.addEventListener("keydown", function(e){
     }
 
 })
+
+
+    function search(){
+    var input, filter, div, i, nameDiv, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementsByClassName("product-container");
+
+    for (i = 0; i < div.length; i++) {
+      nameDiv = div[i].getElementsByClassName("productName")[0];
+      if (nameDiv) {
+        txtValue = nameDiv.textContent || nameDiv.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          div[i].style.display = "";
+        } else {
+          div[i].style.display = "none";
+        }
+      }
+    }
+  };

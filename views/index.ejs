@@ -9,33 +9,28 @@
     <link rel="stylesheet" href="/style/main.css" class="css">
 </head>
 <body>
-    <section class="header" id="header">
-        <a class="header-a" href="#">1</a>
-        <a class="header-a" href="#">2</a>
-        <a class="header-a" href="/"><img src="" class="header-logo" alt="no image provided"></a>
-        <a class="header-a" href="#">3</a>
-        <a class="header-a" href="#">4</a>
-
-        <a class="header-a" href="/add-product">add product</a>
-        <a class="header-a" href="#">register/login</a>
-    </section>
+    <%- include("partials/header.ejs") %>
 
     <section class="swapper" id="swapper">
 
     <div class="slides">
-        <img src="images/" alt="" class="previo">
-        <img src="images/" alt="" class="previo">
-        <img src="images/" alt="" class="previo">
+        <img src="images/school-bus.jpg" alt="" class="previo">
+        <img src="images/dices.jpg" alt="" class="previo">
+        <img src="images/kids-playing.jpg" alt="" class="previo">
     </div>
 
     <div class="arrows">            
        <button onclick="prevSlide()"><i class="fa fa-chevron-left left-arrow"></i></button>
        <button onclick="nextSlide()"><i class="fa fa-chevron-right right-arrow"></i></button>
     </div>
-    
     </section>
 
-    <section class="product" id="product">
+    <section class="main">
+      <div class="main-header">
+      <label for="input">Search for product:</label>
+      <input class="search-bar" type="text" placeholder="for example: bear" id="myInput" onkeyup="search()">
+      </div>
+    <div class="product" id="product">
         
 <% products.forEach(product => { %>
   <div class="product-container">
@@ -46,8 +41,8 @@
   <p>No image available</p>
 <% } %>
     </div>
-    <div class="productName"><%= product.name %></div>
-    <div class="productDesc"><em><%= product.description %></em></div>
+    <div class="productName"><h3><%= product.name %></h3></div>
+    <div class="productDesc"><%= product.description %></div>
     <div class="productPrice"><%= product.price %></div>
 
     <div class="btns" id="btns">
@@ -56,8 +51,9 @@
     </div>
   </div>
 <% }) %>
+    </div>
     </section>
-
+        <%- include("partials/footer.ejs") %>
     <script src="/script/script.js"></script>
 </body>
 </html>

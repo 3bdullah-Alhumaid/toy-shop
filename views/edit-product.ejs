@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add product</title>
+    <link rel="stylesheet" href="style/adding-product.css">
+    <style>
+      .search-bar{
+    min-width: 15em;
+}
+    </style>
+</head>
+<body>
+    <form class="editProduct"  enctype="multipart/form-data" method="PATCH">
+        <legend>Which product you want to update</legend>
+            <input class="search-bar" type="text" placeholder="search for product by its name" id="myInput" onkeyup="search()">
+            <section class="product" id="product">
+                
+        <% products.forEach(product => { %>
+            <div class="product-container">
+              <button class="btns">
+              <div class="productImg">
+                <% if (product.imgUrl) { %>
+                <img src="<%= product.imgUrl %>" alt="<%= product.name %>" />
+              <% } else { %>
+                <p>No image available</p>
+              <% } %>
+              </div>
+              <div class="productName"><%= product.name %></div>
+              <div class="productDesc"><em><%= product.description %></em></div>
+              <div class="productPrice"><%= product.price %></div>
+              </button>
+          </div>
+<% }) %>
+    </section>
+    </form>
+
+    <script>
+      
+    function search(){
+    var input, filter, div, i, nameDiv, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementsByClassName("product-container");
+
+    for (i = 0; i < div.length; i++) {
+      nameDiv = div[i].getElementsByClassName("productName")[0];
+      if (nameDiv) {
+        txtValue = nameDiv.textContent || nameDiv.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          div[i].style.display = "";
+        } else {
+          div[i].style.display = "none";
+        }
+      }
+    }
+  };
+
+    </script>
+</body>
+</html>

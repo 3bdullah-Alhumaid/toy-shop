@@ -1,20 +1,7 @@
 body{
     margin:0;
+    min-height: 100vh;
 }
-#header{
-    display: flex;
-    width: 100%;
-    height: 6em;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: rgb(177, 128, 55);
-}
-
-.header-a{
-    text-decoration: none;
-    color: blanchedalmond;
-}
-
 
 .swapper {
     position: relative;
@@ -25,26 +12,29 @@ body{
 
 .slides {
     display: flex;                  /* put images in a row */
+    height: 100%;
+    width: 100%;
     transition: transform 0.5s ease;
+    z-index: 1;
+
 }
 
 .previo {
+    justify-content: center;
     width: 100%;                     /* each image takes full container width */
     flex-shrink: 0;                   /* prevent shrinking */
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .arrows {
     position: absolute;
     top: 50%;
-    left: 0;
-    right: 0;
+    left: 5%;
+    right: 5%;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
 }
-
-
 
 .arrows button {
     pointer-events: auto; /* allow clicking */
@@ -56,15 +46,29 @@ body{
     padding: 0.5rem 1rem;
     cursor: pointer;
 }
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #59AC77;
+    width: 100%;
+    height: auto;
+}
+label{
+    color: white;
+}
+.main-header{
+    padding: 2em 0;
+}
 .product{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: rgb(31, 148, 31);
-    width: 100%;
-    height: 24em;
-
+    width: 85%;
+    padding: 0 10% 2em 10%;
 }
+
 .product-container{
     display: flex;
     flex-direction: column;
@@ -72,14 +76,15 @@ body{
     align-items: center;
     width: 20em;
     height: 20em;
-    background-color: grey;
+    background-color: rgb(204, 204, 204);
     border-radius: 0 0 20px 20px;
     border: 2px black solid;
+    transition: width 0.3s ease;
 }
 .productImg {
     position: relative;
     width: 100%;
-    height: 100%;  /* ensure container height is defined */
+    height: 100%;
     background-color: white;
     overflow: hidden;
 }
@@ -90,11 +95,13 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* fit entire image inside container without cropping */
+    object-fit: contain;
     border-radius: 20px 20px 0 0;
 }
+
 .productDesc{
     color: rgb(172, 165, 165);
+    display: none;
 }
 
 .btns{
@@ -110,15 +117,20 @@ body{
 
 .add-cart, .add-wish{
     width: 100%;
+    height: 2em;
     transition-duration: 0.4s;
 }
+
 .add-cart:hover, .add-wish:hover{
     background-color: orange;
     color: white;
+    cursor: pointer;
 }
+
 .add-cart{
     border-radius: 2px 0 0 15px;
 }
+
 .add-wish{
     border-radius:  0 2px 15px 0;
 }
@@ -126,10 +138,41 @@ body{
     width: 100%;
     text-align: center;
 }
-.productName, .productDesc{
+
+.productName{
     border-bottom: 2px black solid;
 }
 
 .productName{
     border-top: 2px black solid;
 }
+
+.productPrice{
+    padding: 10px 0;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-weight: bold;
+}
+
+/* hover section */
+
+.product-container:hover {
+    width: 40em;
+    height: 25em;
+}
+.product-container:hover .productDesc {
+    display: block;
+    font-size: 1.2em;
+    width: 90%;
+    border: none;
+    transition: font-size 0.3s ease, width 0.3s ease ;
+    padding: 2em;
+    color: black;
+    font-weight: bold;
+}
+.product-container:hover .productName {
+    border-bottom: none;
+    color: gray;
+}
+
+/*---------------------------------------------------*/
