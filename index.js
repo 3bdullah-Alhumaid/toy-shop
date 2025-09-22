@@ -62,7 +62,7 @@ app.post("/addProduct", upload.single('productImg'), async (req, res) => {
 });
 
 app.get("/edit-product", async(req, res) =>{
-    const result = await db.query("SELECT * FROM product");
+    const result = await db.query("SELECT id, name, description, price, img FROM product");
     const products = result.rows.map(product => ({
         id: product.id,
         name: product.name,
@@ -71,7 +71,21 @@ app.get("/edit-product", async(req, res) =>{
         imgUrl: product.img ? `/uploads/${product.img}` : null,
     }));
 res.render("edit-product.ejs", {products});
+});
+
+app.post("/editingProduct",upload.none(), async(req, res) =>{
+    const productId = req.body.productId;
+    const newName = req.body.productName;
+    const newDescription = req.body.productDesc;
+    const newPrice = req.body.productPrice;
+    await db.query(
+  "UPDATE product SET name = $1, description = $2, price = $3 WHERE id = $4",
+  [newName, newDescription, newPrice, productId]
+);
+
+    res.redirect("/");
 })
+
 app.listen(port, () =>{
     console.log(`app is running in port:${port}`)
 })

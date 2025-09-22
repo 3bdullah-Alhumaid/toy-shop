@@ -3,39 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>add product</title>
-    <link rel="stylesheet" href="style/adding-product.css">
-    <style>
-      .search-bar{
-    min-width: 15em;
-}
-    </style>
+    <title>Edit product</title>
+    <link rel="stylesheet" href="style/product.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <form class="editProduct"  enctype="multipart/form-data" method="PATCH">
-        <legend>Which product you want to update</legend>
-            <input class="search-bar" type="text" placeholder="search for product by its name" id="myInput" onkeyup="search()">
-            <section class="product" id="product">
-                
-        <% products.forEach(product => { %>
-            <div class="product-container">
-              <button class="btns">
-              <div class="productImg">
-                <% if (product.imgUrl) { %>
-                <img src="<%= product.imgUrl %>" alt="<%= product.name %>" />
-              <% } else { %>
-                <p>No image available</p>
-              <% } %>
-              </div>
-              <div class="productName"><%= product.name %></div>
-              <div class="productDesc"><em><%= product.description %></em></div>
-              <div class="productPrice"><%= product.price %></div>
-              </button>
-          </div>
+      <section class="container">
+      <div id="search-bar">
+        <label for="sear-bar">Which product you want to update</label>
+        <input class="search-input" type="text" placeholder="search for product by its name" id="myInput" onkeyup="search()">
+      </div>
+    
+    <div class="product" id="product">
+<% products.forEach(product => { %>
+  <form class="editProduct" action="editingProduct" enctype="multipart/form-data" method="POST">
+    <div class="product-container">
+      <div class="btns">
+        <div class="productImg">
+          <% if (product.imgUrl) { %>
+            <img src="<%= product.imgUrl %>" alt="<%= product.name %>" />
+          <% } else { %>
+            <p>No image available</p>
+          <% } %>
+        </div>
+        <input type="hidden" name="productId" value="<%= product.id %>" />
+        <div class="productName"><h3><%= product.name %></h3></div>
+        <div class="productDesc">
+          <em class="modification"><%= product.description %></em>
+        </div>
+        <div class="productPrice"><h3><%= product.price %></h3></div>
+        <div class="choice hidden">
+          <button class="save" type="submit">save</button>
+        </div>
+      </div>
+    </div>
+  </form>
 <% }) %>
-    </section>
-    </form>
 
+
+    </div>
+    </section>
     <script>
       
     function search(){
@@ -57,6 +64,51 @@
     }
   };
 
+ $(".product-container").click(function() {
+  let btns = $(this).find(".btns");
+  btns.css("background-color", "rgb(24, 189, 255)");
+  let els = $(".btns").not(btns);
+  els.fadeOut(650);
+  $(this).animate({width:"25em"});
+  let name = $(this).find(".productName");
+  let price = $(this).find(".productPrice");
+  let desc = $(this).find(".modification");
+  
+  const nameInput = $("<input>").attr('required', 'required').attr("placeholder", "currently: " +name.text()).val(name.text()).css("text-align", "center").attr('name', 'productName').css("margin", "0.7em 0");
+  name.replaceWith(nameInput);
+
+  const descInput = $("<textarea>").val(desc.text()).attr('name', 'productDesc').css("padding", "1em 0").css("width","250px");
+  desc.replaceWith(descInput);
+
+  const priceInput = $("<input>").attr('required', 'required').val(price.text().slice(1,10)).attr('name', 'productPrice').attr("type", "number").attr("step","0.01" ).css("text-align", "center").css("width", "5em");
+  price.replaceWith(priceInput);
+
+  $(this).find(".choice").removeClass("hidden");
+});
+  // btns = document.querySelectorAll('.btns');
+  // for (let i = 0; i<= btns.length; i++){
+  //   btns[i].addEventListener("click", (e)=>{
+  //   e.currentTarget.style.border="red solid";
+  //   let name = e.currentTarget.querySelector(".productName");
+  //   let price = e.currentTarget.querySelector(".productPrice");
+  //   let description = e.currentTarget.querySelector(".modification");
+  //   let div = e.currentTarget.querySelector('.choice');
+
+  //   div.classList.remove("hidden");
+    
+  //   let priceInput = document.createElement("input");
+  //   priceInput.value = price.innerHTML.slice(1,10);
+    
+  //   let descInput = document.createElement("textarea");
+  //   descInput.value =description.innerHTML;
+
+  //   name.parentNode.replaceChild(nameInput, name);
+  //   price.parentNode.replaceChild(priceInput, price);
+  //   description.parentNode.replaceChild(descInput, description);
+  //   div.appendChild(save);
+    
+  // });
+  // }
     </script>
 </body>
 </html>
